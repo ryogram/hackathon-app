@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import { getLocationsFromCSV } from '../utils/csvParser';
 import { Location } from '../types';
+import './Battle.css'; // スタイルを適用
 
 // カスタムスタイルを適用したマーカーを作成
 const createColoredMarker = (color: string) => {
@@ -87,34 +88,44 @@ const Battle: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>緯度経度バトル</h1>
-            <p>選択中のプレイヤー: {currentPlayer === 1 ? 'Player 1' : 'Player 2'}</p>
-            <button onClick={handleConfirmSelection} disabled={(currentPlayer === 1 && player1Selected.length < 2) || (currentPlayer === 2 && player2Selected.length < 2)}>
+        <div className="battle-container">
+            <h1 className="title">緯度経度バトル</h1>
+            <p className={`current-player ${currentPlayer === 1 ? 'player1' : 'player2'}`}>
+                選択中のプレイヤー: {currentPlayer === 1 ? 'Player 1' : 'Player 2'}
+            </p>
+            <button
+                className="confirm-button"
+                onClick={handleConfirmSelection}
+                disabled={(currentPlayer === 1 && player1Selected.length < 2) || (currentPlayer === 2 && player2Selected.length < 2)}
+            >
                 確認
             </button>
-            {winner && <p>{winner}</p>}
+            {winner && <p className="winner">{winner}</p>}
 
-            <h2>Player 1 の選択した地点</h2>
-            <ul>
-                {player1Selected.map((loc) => (
-                    <li key={loc.id}>
-                        ID: {loc.id}, Latitude: {loc.latitude}, Longitude: {loc.longitude}
-                    </li>
-                ))}
-            </ul>
+            <div className="selected-locations">
+                <div className="player-locations">
+                    <h2>Player 1 の選択した地点</h2>
+                    <ul>
+                        {player1Selected.map((loc) => (
+                            <li key={loc.id}>
+                                ID: {loc.id}, 緯度: {loc.latitude}, 経度: {loc.longitude}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="player-locations">
+                    <h2>Player 2 の選択した地点</h2>
+                    <ul>
+                        {player2Selected.map((loc) => (
+                            <li key={loc.id}>
+                                ID: {loc.id}, 緯度: {loc.latitude}, 経度: {loc.longitude}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
 
-            <h2>Player 2 の選択した地点</h2>
-            <ul>
-                {player2Selected.map((loc) => (
-                    <li key={loc.id}>
-                        ID: {loc.id}, 緯度: {loc.latitude}, 経度: {loc.longitude}
-                    </li>
-                ))}
-            </ul>
-
-            <h2>Map</h2>
-            <MapContainer center={[35.6895, 139.6917]} zoom={5} style={{ height: '500px', width: '100%' }}>
+            <MapContainer center={[35.6895, 139.6917]} zoom={5} className="map-container">
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -123,9 +134,9 @@ const Battle: React.FC = () => {
                     <Marker
                         key={loc.id}
                         position={[loc.latitude, loc.longitude]}
-                        icon={player1Marker} // プレイヤー1の色付きマーカー
+                        icon={player1Marker}
                         eventHandlers={{
-                            click: () => handleMarkerClick(loc), // プレイヤー1の地点を選択
+                            click: () => handleMarkerClick(loc),
                         }}
                     >
                         <Popup>
@@ -138,9 +149,9 @@ const Battle: React.FC = () => {
                     <Marker
                         key={loc.id}
                         position={[loc.latitude, loc.longitude]}
-                        icon={player2Marker} // プレイヤー2の色付きマーカー
+                        icon={player2Marker}
                         eventHandlers={{
-                            click: () => handleMarkerClick(loc), // プレイヤー2の地点を選択
+                            click: () => handleMarkerClick(loc),
                         }}
                     >
                         <Popup>
