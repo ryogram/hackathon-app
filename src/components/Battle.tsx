@@ -88,14 +88,14 @@ const Battle: React.FC = () => {
 
     return (
         <div>
-            <h1>Latitude and Longitude Battle</h1>
-            <p>Current Player: {currentPlayer === 1 ? 'Player 1' : 'Player 2'}</p>
+            <h1>緯度経度バトル</h1>
+            <p>選択中のプレイヤー: {currentPlayer === 1 ? 'Player 1' : 'Player 2'}</p>
             <button onClick={handleConfirmSelection} disabled={(currentPlayer === 1 && player1Selected.length < 2) || (currentPlayer === 2 && player2Selected.length < 2)}>
-                Confirm Selection
+                確認
             </button>
             {winner && <p>{winner}</p>}
 
-            <h2>Player 1 Selected Locations</h2>
+            <h2>Player 1 の選択した地点</h2>
             <ul>
                 {player1Selected.map((loc) => (
                     <li key={loc.id}>
@@ -104,11 +104,11 @@ const Battle: React.FC = () => {
                 ))}
             </ul>
 
-            <h2>Player 2 Selected Locations</h2>
+            <h2>Player 2 の選択した地点</h2>
             <ul>
                 {player2Selected.map((loc) => (
                     <li key={loc.id}>
-                        ID: {loc.id}, Latitude: {loc.latitude}, Longitude: {loc.longitude}
+                        ID: {loc.id}, 緯度: {loc.latitude}, 経度: {loc.longitude}
                     </li>
                 ))}
             </ul>
@@ -129,8 +129,8 @@ const Battle: React.FC = () => {
                         }}
                     >
                         <Popup>
-                            Player 1 Location <br />
-                            Latitude: {loc.latitude}, Longitude: {loc.longitude}
+                            Player 1 の選択可能地点 <br />
+                            緯度: {loc.latitude}, 経度: {loc.longitude}
                         </Popup>
                     </Marker>
                 ))}
@@ -144,8 +144,8 @@ const Battle: React.FC = () => {
                         }}
                     >
                         <Popup>
-                            Player 2 Location <br />
-                            Latitude: {loc.latitude}, Longitude: {loc.longitude}
+                            Player 2 の選択可能地点 <br />
+                            緯度: {loc.latitude}, 経度: {loc.longitude}
                         </Popup>
                     </Marker>
                 ))}
