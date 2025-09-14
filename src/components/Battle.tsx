@@ -79,11 +79,11 @@ const Battle: React.FC = () => {
 
         // 勝者を決定
         if (value1 > value2) {
-            setWinner(`Player 1 wins with value ${value1}`);
+            setWinner(`Player 1 勝ち ${value1}`);
         } else if (value2 > value1) {
-            setWinner(`Player 2 wins with value ${value2}`);
+            setWinner(`Player 2 勝ち ${value2}`);
         } else {
-            setWinner(`It's a tie! Both players have the same value.`);
+            setWinner(`引き分け！両プレイヤーの値は同じです。`);
         }
     };
 
